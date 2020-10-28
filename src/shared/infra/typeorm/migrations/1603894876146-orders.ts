@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class customers1603837009427 implements MigrationInterface {
+export default class orders1603894876146 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.createTable(
       new Table({
-        name: 'customers',
+        name: 'orders',
         columns: [
           {
             name: 'id',
@@ -15,12 +14,8 @@ export default class customers1603837009427 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'email',
-            type: 'varchar',
+            name: 'customer_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -33,11 +28,21 @@ export default class customers1603837009427 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'OrderCustomer',
+            referencedTableName: 'customers',
+            referencedColumnNames: ['id'],
+            columnNames: ['customer_id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+        ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable('customers');
+    await queryRunner.dropTable('orders');
   }
 }
