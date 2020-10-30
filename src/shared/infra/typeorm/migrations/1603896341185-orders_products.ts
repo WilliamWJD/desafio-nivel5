@@ -5,7 +5,7 @@ export default class ordersProducts1603896341185 implements MigrationInterface {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.createTable(
       new Table({
-        name: 'order_products',
+        name: 'orders_products',
         columns: [
           {
             name: 'id',
@@ -68,6 +68,6 @@ export default class ordersProducts1603896341185 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable('order_products');
+    await queryRunner.dropTable('orders_products');
   }
 }
